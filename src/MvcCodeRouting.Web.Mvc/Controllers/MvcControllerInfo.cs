@@ -47,32 +47,6 @@ namespace MvcCodeRouting.Web.Mvc {
       }
 
       public static ControllerInfo Create(Type controllerType, RegisterSettings registerSettings, CodeRoutingProvider provider) {
-
-         ControllerDescriptor controllerDescr = null;
-
-         if (createActionInvoker != null) {
-
-            Controller instance = null;
-
-            try {
-               instance = (Controller)FormatterServices.GetUninitializedObject(controllerType);
-            
-            } catch (SecurityException) { }
-
-            if (instance != null) {
-
-               ControllerActionInvoker actionInvoker = createActionInvoker(instance) as ControllerActionInvoker;
-
-               if (actionInvoker != null) {
-                  controllerDescr = getControllerDescriptor(actionInvoker, new ControllerContext { Controller = instance });
-               }
-            }
-         }
-
-         if (controllerDescr != null) {
-            return new DescribedMvcControllerInfo(controllerDescr, controllerType, registerSettings, provider);
-         }
-
          return new ReflectedMvcControllerInfo(controllerType, registerSettings, provider);
       }
 
